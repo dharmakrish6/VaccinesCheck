@@ -23,6 +23,7 @@ while True:
         }
 
         response = requests.request("GET", url, headers=headers)
+        print(response)
         res = response.json()
         print(res)
         allcenter=res['centers']
