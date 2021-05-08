@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import smtplib, ssl
+import datetime
 
 port = 465  # For SSL
 
@@ -11,13 +12,15 @@ def mailnow(email,sub):
         server.login("makemeappz@gmail.com", 'jvzxuiqhbfozbykf')
         message = 'Subject: {}\n\n{}'.format(sub, 'Please book')
         server.sendmail('dharma@gmail.com', email, message)
-
+#Date format
+today_date = datetime.date.today()
+new_today_date = today_date.strftime("%d-%m-%Y")
 
 while True:
     pincodes=['560076','560011','560078','560060']
     for pincode in pincodes:
         print('Vaccination availability checking for ',pincode)
-        url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByPin?pincode='+pincode+'&date=08-05-2021'
+        url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByPin?pincode={}&date={}'.format(pincode,new_today_date)
         headers = {
         'User-Agent': 'PostmanRuntime/7.26.8'
         }
