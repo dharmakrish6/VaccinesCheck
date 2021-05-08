@@ -35,17 +35,17 @@ while True:
 
                 if ((age==18) and (capacity> 0)):
         
-                    message='Vaccines available for 18+ age in '+ pincode + center['name']+' capacity:'+ str(each['available_capacity'])
+                    message='Vaccines available for 18+ age in {} center:{} capacity:{}'.format(pincode,center['name'],str(each['available_capacity']))
                     print(message)
                     mailnow('suma.s16@gmail.com',message)
                 elif((age==45) and (capacity> 0)):
                     
-                    message='Vaccines available for 45+ age in'+ pincode + center['name']+' capacity:'+ str(each['available_capacity'])
+                    message='Vaccines available for 45+ age in {} center:{} capacity:{}'.format(pincode,center['name'],str(each['available_capacity']))
                     print(message)
                     # mailnow('dharmakrish6@gmail.com',message)
                 else:
                     pass
-    time.sleep(5)
+    time.sleep(10)
 
 
                 
