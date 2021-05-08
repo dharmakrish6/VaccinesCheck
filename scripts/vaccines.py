@@ -24,6 +24,7 @@ while True:
 
         response = requests.request("GET", url, headers=headers)
         res = response.json()
+        print(res)
         allcenter=res['centers']
         for center in allcenter:
             session_c=center['sessions']
