@@ -5,19 +5,22 @@ import smtplib, ssl
 import datetime
 
 port = 465  # For SSL
-
+from_email='from_email' 
+password='App password' # need to create from https://myaccount.google.com/apppasswords
+toemail='receipeint email' # to notify the open slot
 context = ssl.create_default_context()
+
 def mailnow(email,sub):
     with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        server.login("makemeappz@gmail.com", 'jvzxuiqhbfozbykf')
-        message = 'Subject: {}\n\n{}'.format(sub, 'Please book')
-        server.sendmail('dharma@gmail.com', email, message)
+        server.login(from_email, password) 
+        message = 'Subject: {}\n\n{}'.format(sub, 'Please book your slot')
+        server.sendmail(from_email, email, message)
 #Date format
 today_date = datetime.date.today()
 new_today_date = today_date.strftime("%d-%m-%Y")
 
 while True:
-    pincodes=['560076','560011','560078','560060']
+    pincodes=['560076','560011','560078','560060'] #change pincode for your area
     for pincode in pincodes:
         print('Vaccination availability checking for ',pincode)
         url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByPin?pincode={}&date={}'.format(pincode,new_today_date)
@@ -26,9 +29,9 @@ while True:
         }
 
         response = requests.request("GET", url, headers=headers)
-        print(response)
+        # print(response)
         res = response.json()
-        print(res)
+        # print(res)
         allcenter=res['centers']
         for center in allcenter:
             session_c=center['sessions']
@@ -42,15 +45,15 @@ while True:
         
                     message='Vaccines available for 18+ age in {} center:{} capacity:{}'.format(pincode,center['name'],str(each['available_capacity']))
                     print(message)
-                    mailnow('suma.s16@gmail.com',message)
+                    mailnow(toemail,message)
                 elif((age==45) and (capacity> 0)):
-                    
+                    #if required you can enable 45+ age slot notification also
                     message='Vaccines available for 45+ age in {} center:{} capacity:{}'.format(pincode,center['name'],str(each['available_capacity']))
                     print(message)
                     # mailnow('dharmakrish6@gmail.com',message)
                 else:
                     pass
-    time.sleep(10)
+    time.sleep(60) # Run every one minutes. You can change if you want 
 
 
                 
